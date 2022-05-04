@@ -20,15 +20,25 @@ async function run(){
 
         await client.connect()
         const laptopCollection = client.db('hunter-laptop').collection('items')
-      
+        
+        // get all item api
         app.get('/laptops',async(req,res)=>{
            const query = {}
            const cursor = laptopCollection.find(query)
            const laptops =  await cursor.toArray()
            res.send(laptops)
         })
+        // get single item api
+        app.get('/laptops/:id',async (req,res)=>{
+            const id = req.params.id
+            const query = {_id:ObjectId(id)}
+            const laptop = await laptopCollection.findOne(query)
+            res.send(laptop)
+
+        })
 
         
+
 
     }
     finally{
