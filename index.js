@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const app = express()
 const port = process.env.PORT || 5000;
 require('dotenv').config()
@@ -27,6 +27,8 @@ async function run(){
            const laptops =  await cursor.toArray()
            res.send(laptops)
         })
+
+        
 
     }
     finally{
