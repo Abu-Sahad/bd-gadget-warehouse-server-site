@@ -51,7 +51,28 @@ async function run() {
             res.send(result)
         })
         // update api 
-        
+        app.put('/laptop/:id', async (req, res) => {
+            const id = req.params.id
+            const newQuantity = req.body
+            const filter = { _id: ObjectId(id) }
+            const options = { upsert: true }
+            const doc = {
+                $set: {
+                    quantity: newQuantity.quantity
+                }
+            }
+            const result = await laptopCollection.updateOne(filter, doc, options)
+            res.send(result)
+        })
+
+        app.get('/myItems', async (req, res) => {
+            const email = req.query.email
+            const query = { email: email }
+            const cursor = laptopCollection.find(query)
+            const result = await cursor.toArray()
+            res.send(result)
+        })
+
 
     }
     finally {
